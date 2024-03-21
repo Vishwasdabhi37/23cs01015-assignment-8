@@ -6,7 +6,29 @@ void func(int *arr, int n)
     {
         sum += *(arr + i);
     }
-    printf("%d is repeating more than once.\n", sum - (n * (n + 1) / 2));
+    int num = sum - (n * (n + 1) / 2);
+    for (int i = 1; i <= n; i++)
+    {
+        int flag = 0;
+        for (int j = 0; j < n + 1; j++)
+        {
+            if (*(arr + j) == i)
+            {
+                flag++;
+            }
+            else if (*(arr + j) > n)
+            {
+                printf("Invalid input\n");
+                return;
+            }
+        }
+        if (flag != 1 && flag != 2)
+        {
+            printf("Invalid input\n");
+            return;
+        }
+    }
+    printf("The number repeating twice is: %d\n", num);
 }
 int main()
 {
