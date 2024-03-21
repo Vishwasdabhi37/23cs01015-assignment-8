@@ -1,4 +1,20 @@
 #include <stdio.h>
+void func(int m, int n, int p, int q, int (*a)[n], int (*b)[q], int (*c)[q])
+{
+    for (int i = 0; i < m; i++)
+    {
+        for (int j = 0; j < q; j++)
+        {
+            int x = 0;
+            c[i][j] = 0;
+            while (x < n)
+            {
+                *(*(c + i) + j) += (*(*(a + i) + x)) * (*(*(b + x) + j));
+                x++;
+            }
+        }
+    }
+}
 int main()
 {
     int m, n, p, q;
@@ -28,19 +44,7 @@ int main()
             scanf("%d", &(*(*(b + i) + j)));
         }
     }
-    for (int i = 0; i < m; i++)
-    {
-        for (int j = 0; j < q; j++)
-        {
-            int x = 0;
-            c[i][j] = 0;
-            while (x < n)
-            {
-                *(*(c + i) + j) += (*(*(a + i) + x)) * (*(*(b + x) + j));
-                x++;
-            }
-        }
-    }
+    func(m, n, p, q, a, b, c);
     printf("Resultant matrix after multiplication : \n");
     for (int i = 0; i < m; i++)
     {
