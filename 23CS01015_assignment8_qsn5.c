@@ -1,68 +1,58 @@
 #include <stdio.h>
-void func(int rows, int cols, int n, int (*mat)[cols])
+void func(int m, int n, int p, int q, int (*a)[n], int (*b)[q], int (*c)[q])
 {
-    if (n % 4 == 0)
+    for (int i = 0; i < m; i++)
     {
-        for (int i = 0; i < rows; i++)
+        for (int j = 0; j < q; j++)
         {
-            for (int j = 0; j < cols; j++)
+            int x = 0;
+            c[i][j] = 0;
+            while (x < n)
             {
-                printf("%d ", *(*(mat + i) + j));
+                *(*(c + i) + j) += (*(*(a + i) + x)) * (*(*(b + x) + j));
+                x++;
             }
-            printf("\n");
-        }
-    }
-    else if (n % 4 == 3)
-    {
-        for (int i = 0; i < rows; i++)
-        {
-            for (int j = cols - 1; j >= 0; j--)
-            {
-                printf("%d ", *(*(mat + i) + j));
-            }
-            printf("\n");
-        }
-    }
-    else if (n % 4 == 2)
-    {
-        for (int i = rows - 1; i >= 0; i--)
-        {
-            for (int j = cols - 1; j >= 0; j--)
-            {
-                printf("%d ", *(*(mat + i) + j));
-            }
-            printf("\n");
-        }
-    }
-    else if (n % 4 == 1)
-    {
-        for (int i = 0; i < cols; i++)
-        {
-            for (int j = rows - 1; j >= 0; j--)
-            {
-                printf("%d ", *(*(mat + j) + i));
-            }
-            printf("\n");
         }
     }
 }
 int main()
 {
-    int rows, cols;
-    printf("Enter rows and cols of the matrix : ");
-    scanf("%d", &rows);
-    scanf("%d", &cols);
-    int mat[rows][cols];
-    for (int i = 0; i < rows; i++)
+    int m, n, p, q;
+    printf("Enter the order of first matrix(m,n) : ");
+    scanf("%d%d", &m, &n);
+    printf("Enter the order of second matrix(p,q) : ");
+    scanf("%d%d", &p, &q);
+    if (n != p)
     {
-        for (int j = 0; j < cols; j++)
+        printf("Matrix multiplication is not possible\n");
+        return 0;
+    }
+    int a[m][n], b[p][q], c[m][q];
+    printf("Enter matrix A : ");
+    for (int i = 0; i < m; i++)
+    {
+        for (int j = 0; j < n; j++)
         {
-            scanf("%d", &*(*(mat + i) + j));
+            scanf("%d", &(*(*(a + i) + j)));
         }
     }
-    int n;
-    printf("Enter how many times you want to rotate the matrix : ");
-    scanf("%d", &n);
-    func(rows, cols, n, mat);
+    printf("Enter matrix B : ");
+    for (int i = 0; i < p; i++)
+    {
+        for (int j = 0; j < q; j++)
+        {
+            scanf("%d", &(*(*(b + i) + j)));
+        }
+    }
+    func(m, n, p, q, a, b, c);
+    printf("Resultant matrix after multiplication : \n");
+    for (int i = 0; i < m; i++)
+    {
+        for (int j = 0; j < q; j++)
+        {
+            printf("%d ", *(*(c + i) + j));
+        }
+        printf("\n");
+    }
     return 0;
 }
